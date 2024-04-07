@@ -1,0 +1,45 @@
+{
+  "name": "@fering-org/qsp-test-engine",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "rmdir": "node -e \"var fs = require('fs');process.argv.slice(1).map((fpath)=>{ try {fs.rmdirSync(fpath,{recursive: true})} catch(e){console.warn('Error folder:', fpath, e)}});process.exit(0);\"",
+    "prepare": "npm run rmdir -- lib && tsc --project tsconfig.build.json",
+    "test": "vitest",
+    "lint": "eslint src/",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gretmn102/qsp-test-engine.git"
+  },
+  "author": "gretmn102",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gretmn102/qsp-test-engine/issues"
+  },
+  "homepage": "https://github.com/gretmn102/qsp-test-engine#readme",
+  "dependencies": {
+    "@fering-org/functional-helper": "^0.6.0",
+    "@qsp/converters": "^1.0.1",
+    "@qsp/wasm-engine": "^1.3.1",
+    "immutability-helper": "^3.1.1",
+    "vitest": "^1.4.0",
+    "xoid": "^1.0.0-beta.11"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.5",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-typescript": "^3.0.0",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.4.3"
+  }
+}

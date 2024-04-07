@@ -1,0 +1,6 @@
+# 0
+  IncLib 'helloWorld.qsps'
+  act 'start':
+    gt 'begin'
+  end
+-
