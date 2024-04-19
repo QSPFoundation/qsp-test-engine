@@ -273,7 +273,7 @@ export namespace TestClient {
       testClient.lastSelectedTime,
       testClient.client.actions.getMain
     )
-    expect(expectedString).toBe(currentMain.value)
+    expect(currentMain.value).toBe(expectedString)
   }
 
   export async function select(testClient: TestClient, action: string) {
