@@ -3,7 +3,6 @@ import { readQsps, writeQsp } from "@qsp/converters"
 import { Result, UnionCase } from "@fering-org/functional-helper"
 
 import { QspFileSystem } from "./qspFileSystem"
-import { GameClient } from "./gameClient"
 
 export type QspFileData =
   | UnionCase<"Binary", ArrayBuffer>
@@ -106,37 +105,5 @@ export namespace GameServer {
     )
 
     server.api.openGame(binary, isNewGame)
-  }
-
-  export async function start(server: GameServer, $gameClient: GameClient, initGameFileName: string) {
-    const api = server.api
-
-    api.on("open_game", async (path, isNewGame, onOpened) => {
-      await openGame(server, path, isNewGame)
-      onOpened()
-    })
-
-    api.on("close_file", (path, onReady) => {
-      onReady()
-    })
-
-    api.on("main_changed", text => {
-      $gameClient.actions.setMain(text)
-    })
-
-    api.on("actions_changed", actions => {
-      $gameClient.actions.setActions(actions)
-    })
-
-    api.on("version", (type, onVersion) => {
-      onVersion(api.version())
-    })
-
-    api.on("objects_changed", (objects) => {
-      $gameClient.actions.setObjects(objects)
-    })
-
-    await openGame(server, initGameFileName, true)
-    api.restartGame()
   }
 }

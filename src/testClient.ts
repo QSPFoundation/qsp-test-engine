@@ -18,7 +18,9 @@ export namespace TestClient {
     const gameServer = GameServer.create(api, basePath)
     const d = new Date()
     const gameClient = GameClient.create(d)
-    await GameServer.start(gameServer, gameClient, initGameFileName)
+    GameClient.bindToServer(gameClient, gameServer)
+    await GameServer.openGame(gameServer, initGameFileName, true)
+    gameServer.api.restartGame()
     return {
       server: gameServer,
       client: gameClient,

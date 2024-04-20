@@ -1,6 +1,7 @@
 import { QspErrorData, QspListItem } from "@qsp/wasm-engine"
 import immutableUpdate from "immutability-helper"
 import xoid, { Actions, Atom } from "xoid"
+import { GameServer } from "./gameServer"
 
 export type TimeUpdatedValue<Value> = {
   updated: Date
@@ -80,5 +81,34 @@ export namespace GameClient {
           atom.value.objects,
       })
     )
+  }
+
+  export function bindToServer($gameClient: GameClient, server: GameServer) {
+    const api = server.api
+
+    api.on("open_game", async (path, isNewGame, onOpened) => {
+      await GameServer.openGame(server, path, isNewGame)
+      onOpened()
+    })
+
+    api.on("close_file", (path, onReady) => {
+      onReady()
+    })
+
+    api.on("main_changed", text => {
+      $gameClient.actions.setMain(text)
+    })
+
+    api.on("actions_changed", actions => {
+      $gameClient.actions.setActions(actions)
+    })
+
+    api.on("version", (type, onVersion) => {
+      onVersion(api.version())
+    })
+
+    api.on("objects_changed", (objects) => {
+      $gameClient.actions.setObjects(objects)
+    })
   }
 }
