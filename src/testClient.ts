@@ -1,5 +1,6 @@
 import { expect } from "vitest"
 import { QspListItem } from "@qsp/wasm-engine"
+import { UnionCase } from "@fering-org/functional-helper"
 
 import { PromiseExt } from "./promiseExt"
 import { QspAPIExt } from "./qspAPIExt"
@@ -12,15 +13,47 @@ export type TestClient = {
   lastSelectedTime: Date
 }
 
+export type StartingLocation =
+  | UnionCase<"None">
+  | UnionCase<"Default">
+  | UnionCase<"Custom", string>
+
+export namespace StartingLocation {
+  export function mkNone() : StartingLocation {
+    return UnionCase.mkEmptyUnionCase("None")
+  }
+
+  export function mkDefault() : StartingLocation {
+    return UnionCase.mkEmptyUnionCase("Default")
+  }
+
+  export function mkCustom(location: string) : StartingLocation {
+    return UnionCase.mkUnionCase("Custom", location)
+  }
+}
+
 export namespace TestClient {
-  export async function start(basePath: string, initGameFileName: string): Promise<TestClient> {
+  export async function start(
+    basePath: string,
+    initGameFileName: string,
+    startingLocation: StartingLocation = StartingLocation.mkDefault()
+  ): Promise<TestClient> {
     const api = await QspAPIExt.init()
     const gameServer = GameServer.create(api, basePath)
     const d = new Date()
     const gameClient = GameClient.create(d)
     GameClient.bindToServer(gameClient, gameServer)
     await GameServer.openGame(gameServer, initGameFileName, true)
-    gameServer.api.restartGame()
+    switch (startingLocation.case) {
+      case "Default":
+        gameServer.api.restartGame()
+        break
+      case "None":
+        break
+      case "Custom":
+        gameServer.api.execLoc(startingLocation.fields)
+        break
+    }
     return {
       server: gameServer,
       client: gameClient,
