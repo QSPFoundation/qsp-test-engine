@@ -1,23 +1,13 @@
 import { expect } from "vitest"
-import { initQspEngine, QspAPI, QspErrorData, QspListItem } from "@qsp/wasm-engine"
-// @ts-expect-error supported in new node version
-import wasmUrl from "@qsp/wasm-engine/qsp-engine.wasm?url"
+import { QspAPI, QspErrorData, QspListItem } from "@qsp/wasm-engine"
 import { readQsps, writeQsp } from "@qsp/converters"
-import { readFile } from "node:fs/promises"
 import immutableUpdate from "immutability-helper"
 import xoid, { Actions, Atom } from "xoid"
 import { Result, UnionCase } from "@fering-org/functional-helper"
 
 import { PromiseExt } from "./promiseExt"
+import { QspAPIExt } from "./qspAPIExt"
 import { QspFileSystem } from "./qspFileSystem"
-
-namespace QspAPI {
-  export async function init(): Promise<QspAPI> {
-    const wasm = await readFile("." + wasmUrl)
-    const api = await initQspEngine(wasm)
-    return api
-  }
-}
 
 export type TimeUpdatedValue<Value> = {
   updated: Date
@@ -244,7 +234,7 @@ export type TestClient = {
 
 export namespace TestClient {
   export async function start(basePath: string, initGameFileName: string): Promise<TestClient> {
-    const api = await QspAPI.init()
+    const api = await QspAPIExt.init()
     const gameServer = GameServer.create(api, basePath)
     const d = new Date()
     const gameClient = GameClient.create(d)
