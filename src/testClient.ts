@@ -56,6 +56,7 @@ export namespace TimeUpdatedValue {
 export type GameClientState = {
   main: TimeUpdatedValue<string>
   actions: TimeUpdatedValue<QspListItem[]>
+  objects: TimeUpdatedValue<QspListItem[]>
   error?: TimeUpdatedValue<QspErrorData>
 }
 
@@ -64,6 +65,7 @@ export namespace GameClientState {
     return {
       main: TimeUpdatedValue.create(dateTime, ""),
       actions: TimeUpdatedValue.create(dateTime, []),
+      objects: TimeUpdatedValue.create(dateTime, []),
       error: undefined
     }
   }
@@ -74,6 +76,8 @@ export type GameClient = Atom<GameClientState> & Actions<{
   getMain: () => TimeUpdatedValue<string>,
   setActions: (actions: QspListItem[]) => void,
   getActions: () => TimeUpdatedValue<QspListItem[]>,
+  setObjects: (actions: QspListItem[]) => void,
+  getObjects: () => TimeUpdatedValue<QspListItem[]>,
 }>
 
 export namespace GameClient {
@@ -95,6 +99,13 @@ export namespace GameClient {
         },
         getActions: () : TimeUpdatedValue<QspListItem[]> =>
           atom.value.actions,
+        setObjects: (objects: QspListItem[]) => {
+          atom.focus("objects").set(
+            TimeUpdatedValue.create(new Date, objects)
+          )
+        },
+        getObjects: () : TimeUpdatedValue<QspListItem[]> =>
+          atom.value.objects,
       })
     )
   }
@@ -227,6 +238,10 @@ export namespace GameServer {
       onVersion(api.version())
     })
 
+    api.on("objects_changed", (objects) => {
+      $gameClient.actions.setObjects(objects)
+    })
+
     await openGame(server, initGameFileName, true)
     api.restartGame()
   }
@@ -274,6 +289,14 @@ export namespace TestClient {
       testClient.client.actions.getMain
     )
     expect(currentMain.value).toBe(expectedString)
+  }
+
+  export async function objectsEqual(testClient: TestClient, expectedObjects: QspListItem[]) {
+    const currentMain = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getObjects
+    )
+    expect(currentMain.value).toStrictEqual(expectedObjects)
   }
 
   export async function select(testClient: TestClient, action: string) {

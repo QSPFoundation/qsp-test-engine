@@ -1,0 +1,13 @@
+# addObjects
+  $mode = 'easy'
+  AddObj 'Sword'
+  AddObj 'Shield'
+  if $mode = 'easy':
+    AddObj 'Potion'
+  end
+  act 'Fight':
+    DelObj 'Potion'
+    DelObj 'Shield'
+    'End of fight'
+  end
+-
