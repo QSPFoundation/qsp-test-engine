@@ -8,19 +8,8 @@ import immutableUpdate from "immutability-helper"
 import xoid, { Actions, Atom } from "xoid"
 import { Result, UnionCase } from "@fering-org/functional-helper"
 
+import { PromiseExt } from "./promiseExt"
 import { QspFileSystem } from "./qspFileSystem"
-
-export namespace PromiseExt {
-  export function wait(ms: number) {
-    return new Promise((resolveOuter) => {
-      resolveOuter(
-        new Promise((resolveInner) => {
-          setTimeout(resolveInner, ms)
-        }),
-      )
-    })
-  }
-}
 
 namespace QspAPI {
   export async function init(): Promise<QspAPI> {
