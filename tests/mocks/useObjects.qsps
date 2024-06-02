@@ -1,0 +1,19 @@
+# begin
+  AddObj 'Sword'
+  AddObj 'Potion'
+
+  $onObjSel = 'onObjSel'
+-
+
+# onObjSel
+  if $selObj = 'Potion':
+    'Potion is selected'
+    act 'Drink':
+      cla & *clr
+      DelObj 'Potion'
+      '+hp'
+    end
+  end
+
+  unsel
+-

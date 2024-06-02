@@ -105,4 +105,16 @@ export namespace TestClient {
     testClient.server.api.selectAction(res)
     testClient.server.api.execSelectedAction()
   }
+
+  export async function selectObject(testClient: TestClient, object: string) {
+    const objects = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getObjects
+    )
+    const res = objects.value.findIndex(
+      currentObject => currentObject.name === object
+    )
+    expect(res, `Not found "${object}"`).not.toBe(-1)
+    testClient.server.api.selectObject(res)
+  }
 }

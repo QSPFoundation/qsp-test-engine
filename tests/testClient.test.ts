@@ -8,7 +8,7 @@ test("IncLib", async() => {
   await TestClient.mainEqual(testClient, "Hello world\r\n")
 })
 
-test("Objects", async () => {
+test("Objects equals", async () => {
   const testClient = await TestClient.start("tests/mocks", "addObjects.qsps")
   await TestClient.objectsEqual(testClient, [
     { name: "Sword", image: "" },
@@ -20,6 +20,21 @@ test("Objects", async () => {
     { name: "Sword", image: "" },
   ])
   await TestClient.mainEqual(testClient, "End of fight\r\n")
+})
+
+test("Objects select", async () => {
+  const testClient = await TestClient.start("tests/mocks", "useObjects.qsps")
+  await TestClient.objectsEqual(testClient, [
+    { name: "Sword", image: "" },
+    { name: "Potion", image: "" },
+  ])
+  await TestClient.selectObject(testClient, "Potion")
+  await TestClient.mainEqual(testClient, "Potion is selected\r\n")
+  await TestClient.select(testClient, "Drink")
+  await TestClient.objectsEqual(testClient, [
+    { name: "Sword", image: "" },
+  ])
+  await TestClient.mainEqual(testClient, "+hp\r\n")
 })
 
 describe("starting location", () => {
