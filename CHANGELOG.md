@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/gretmn102/qsp-test-engine/compare/v0.2.0...v0.2.1) (2024-06-02)
+
+
+### Features
+
+* add select object ([bb23bcd](https://github.com/gretmn102/qsp-test-engine/commit/bb23bcd50ee2c2915bd3bce61483dcfd302a8167))
+
 ## [0.2.0](https://github.com/gretmn102/qsp-test-engine/compare/v0.1.1...v0.2.0) (2024-04-20)
 
 
