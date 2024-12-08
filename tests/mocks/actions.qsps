@@ -1,0 +1,11 @@
+# begin
+  act 'First action':
+    'You click on the first action'
+  end
+  act 'Second action':
+    'You click on the second action'
+  end
+  act 'Third action':
+    'You click on the third action'
+  end
+-

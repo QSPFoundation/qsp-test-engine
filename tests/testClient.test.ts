@@ -1,8 +1,27 @@
-import { describe, it, test } from "vitest"
+import { describe, expect, it, test } from "vitest"
 
 import { StartingLocation, TestClient } from "../src"
 
-test("IncLib", async() => {
+describe("Action select", () => {
+  it("select exists action", async () => {
+    const testClient = await TestClient.start("tests/mocks", "actions.qsps")
+    await TestClient.select(testClient, "First action")
+    await TestClient.mainEqual(testClient, "You click on the first action\r\n")
+  })
+  it("select not exists action", async () => {
+    const testClient = await TestClient.start("tests/mocks", "actions.qsps")
+    await expect(() => TestClient.select(testClient, "Non-existent action"))
+      .rejects
+      .toThrowError([
+        "Not found \"Non-existent action\" in:",
+        "* First action",
+        "* Second action",
+        "* Third action",
+      ].join("\n"))
+  })
+})
+
+test("IncLib", async () => {
   const testClient = await TestClient.start("tests/mocks", "game.qsps")
   await TestClient.select(testClient, "start")
   await TestClient.mainEqual(testClient, "Hello world\r\n")

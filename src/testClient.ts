@@ -1,4 +1,4 @@
-import { expect } from "vitest"
+import { expect, assert } from "vitest"
 import { QspListItem } from "@qsp/wasm-engine"
 import { UnionCase } from "@fering-org/functional-helper"
 
@@ -101,7 +101,10 @@ export namespace TestClient {
     const res = actions.value.findIndex(
       currentAction => currentAction.name === action
     )
-    expect(res, `Not found "${action}"`).not.toBe(-1)
+    if (res < 0) {
+      const actionStrings = actions.value.map(x => `* ${x.name}`).join("\n")
+      assert.fail(`Not found "${action}" in:\n${actionStrings}`)
+    }
     testClient.server.api.selectAction(res)
     testClient.server.api.execSelectedAction()
   }
