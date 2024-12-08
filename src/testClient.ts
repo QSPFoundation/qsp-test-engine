@@ -117,7 +117,10 @@ export namespace TestClient {
     const res = objects.value.findIndex(
       currentObject => currentObject.name === object
     )
-    expect(res, `Not found "${object}"`).not.toBe(-1)
+    if (res < 0) {
+      const objectNames = objects.value.map(x => `* ${x.name}`).join("\n")
+      assert.fail(`Not found "${object}" in:\n${objectNames}`)
+    }
     testClient.server.api.selectObject(res)
   }
 }

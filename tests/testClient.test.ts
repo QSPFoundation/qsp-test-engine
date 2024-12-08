@@ -41,19 +41,31 @@ test("Objects equals", async () => {
   await TestClient.mainEqual(testClient, "End of fight\r\n")
 })
 
-test("Objects select", async () => {
-  const testClient = await TestClient.start("tests/mocks", "useObjects.qsps")
-  await TestClient.objectsEqual(testClient, [
-    { name: "Sword", image: "" },
-    { name: "Potion", image: "" },
-  ])
-  await TestClient.selectObject(testClient, "Potion")
-  await TestClient.mainEqual(testClient, "Potion is selected\r\n")
-  await TestClient.select(testClient, "Drink")
-  await TestClient.objectsEqual(testClient, [
-    { name: "Sword", image: "" },
-  ])
-  await TestClient.mainEqual(testClient, "+hp\r\n")
+describe("Objects select", () => {
+  it("Use potion", async () => {
+    const testClient = await TestClient.start("tests/mocks", "useObjects.qsps")
+    await TestClient.objectsEqual(testClient, [
+      { name: "Sword", image: "" },
+      { name: "Potion", image: "" },
+    ])
+    await TestClient.selectObject(testClient, "Potion")
+    await TestClient.mainEqual(testClient, "Potion is selected\r\n")
+    await TestClient.select(testClient, "Drink")
+    await TestClient.objectsEqual(testClient, [
+      { name: "Sword", image: "" },
+    ])
+    await TestClient.mainEqual(testClient, "+hp\r\n")
+  })
+  it("Use not exist object", async () => {
+    const testClient = await TestClient.start("tests/mocks", "useObjects.qsps")
+    await expect(() => TestClient.selectObject(testClient, "Not exist object"))
+      .rejects
+      .toThrowError([
+        "Not found \"Not exist object\" in:",
+        "* Sword",
+        "* Potion",
+      ].join("\n"))
+  })
 })
 
 describe("starting location", () => {
