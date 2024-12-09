@@ -93,6 +93,14 @@ export namespace TestClient {
     expect(currentMain.value).toStrictEqual(expectedObjects)
   }
 
+  export async function actionsEqual(testClient: TestClient, expectedObjects: QspListItem []) {
+    const currentMain = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getActions
+    )
+    expect(currentMain.value).toStrictEqual(expectedObjects)
+  }
+
   export async function select(testClient: TestClient, action: string) {
     const actions = await getNewValue(
       testClient.lastSelectedTime,

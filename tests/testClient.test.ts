@@ -21,6 +21,26 @@ describe("Action select", () => {
   })
 })
 
+describe("Actions equals", () => {
+  it("empty", async () => {
+    const testClient = await TestClient.start("tests/mocks", "actions.qsps", StartingLocation.mkCustom("startEmptyActions"))
+    // fix(actionsEqual): the function does not respond if you run the game without actions
+    await TestClient.actionsEqual(testClient, [
+      { name: "start", image: ""},
+    ])
+    await TestClient.select(testClient, "start")
+    await TestClient.actionsEqual(testClient, [])
+  })
+  it("Three actions", async () => {
+    const testClient = await TestClient.start("tests/mocks", "actions.qsps")
+    await TestClient.actionsEqual(testClient, [
+      { name: "First action", image: ""},
+      { name: "Second action", image: ""},
+      { name: "Third action", image: ""},
+    ])
+  })
+})
+
 test("IncLib", async () => {
   const testClient = await TestClient.start("tests/mocks", "game.qsps")
   await TestClient.select(testClient, "start")
