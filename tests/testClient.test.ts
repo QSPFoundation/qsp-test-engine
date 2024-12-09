@@ -23,12 +23,7 @@ describe("Action select", () => {
 
 describe("Actions equals", () => {
   it("empty", async () => {
-    const testClient = await TestClient.start("tests/mocks", "actions.qsps", StartingLocation.mkCustom("startEmptyActions"))
-    // fix(actionsEqual): the function does not respond if you run the game without actions
-    await TestClient.actionsEqual(testClient, [
-      { name: "start", image: ""},
-    ])
-    await TestClient.select(testClient, "start")
+    const testClient = await TestClient.start("tests/mocks", "actions.qsps", StartingLocation.mkCustom("emptyActions"))
     await TestClient.actionsEqual(testClient, [])
   })
   it("Three actions", async () => {

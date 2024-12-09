@@ -10,12 +10,6 @@
   end
 -
 
-# startEmptyActions
-  act 'start':
-    gt 'emptyActions'
-  end
--
-
 # emptyActions
   'Location with empty actions'
 -
