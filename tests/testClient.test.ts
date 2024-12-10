@@ -79,6 +79,24 @@ describe("Has object", () => {
   })
 })
 
+describe("Not has object", () => {
+  it("not has exists object", async () => {
+    const testClient = await TestClient.start("tests/mocks", "addObjects.qsps")
+    await TestClient.notHasObject(testClient, "Bow")
+  })
+  it("has exists object", async () => {
+    const testClient = await TestClient.start("tests/mocks", "addObjects.qsps")
+    await expect(() => TestClient.notHasObject(testClient, "Sword"))
+      .rejects
+      .toThrowError([
+        "Found \"Sword\" in:",
+        "* Sword",
+        "* Shield",
+        "* Potion",
+      ].join("\n"))
+  })
+})
+
 describe("Objects select", () => {
   it("Use potion", async () => {
     const testClient = await TestClient.start("tests/mocks", "useObjects.qsps")
