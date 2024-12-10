@@ -93,6 +93,18 @@ export namespace TestClient {
     expect(currentMain.value).toStrictEqual(expectedObjects)
   }
 
+  export async function hasObject(testClient: TestClient, object: string) {
+    const $objects = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getObjects
+    )
+    const index = $objects.value.findIndex(obj => obj.name === object)
+    if (index < 0) {
+      const objectNames = $objects.value.map(x => `* ${x.name}`).join("\n")
+      assert.fail(`Not found "${object}" in:\n${objectNames}`)
+    }
+  }
+
   export async function actionsEqual(testClient: TestClient, expectedObjects: QspListItem []) {
     const currentMain = await getNewValue(
       testClient.lastSelectedTime,

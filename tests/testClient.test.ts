@@ -61,6 +61,24 @@ test("Objects equals", async () => {
   await TestClient.mainEqual(testClient, "End of fight\r\n")
 })
 
+describe("Has object", () => {
+  it("not has exists object", async () => {
+    const testClient = await TestClient.start("tests/mocks", "addObjects.qsps")
+    await expect(() => TestClient.hasObject(testClient, "Not exists object"))
+      .rejects
+      .toThrowError([
+        "Not found \"Not exists object\" in:",
+        "* Sword",
+        "* Shield",
+        "* Potion",
+      ].join("\n"))
+  })
+  it("has exists object", async () => {
+    const testClient = await TestClient.start("tests/mocks", "addObjects.qsps")
+    await TestClient.hasObject(testClient, "Sword")
+  })
+})
+
 describe("Objects select", () => {
   it("Use potion", async () => {
     const testClient = await TestClient.start("tests/mocks", "useObjects.qsps")
