@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/gretmn102/qsp-test-engine/compare/v0.2.1...v0.2.2) (2024-12-13)
+
+
+### Features
+
+* add `actionsEqual` ([f81fbb9](https://github.com/gretmn102/qsp-test-engine/commit/f81fbb9a630a36c5fe846b42e571b338ef759c00)), closes [#2](https://github.com/gretmn102/qsp-test-engine/issues/2)
+* add `hasAction` ([54a156b](https://github.com/gretmn102/qsp-test-engine/commit/54a156b0a93a8baddfadb80ba851777c3f602785)), closes [#9](https://github.com/gretmn102/qsp-test-engine/issues/9)
+* add `hasObject` ([814a207](https://github.com/gretmn102/qsp-test-engine/commit/814a207f9c4b981dca6e521c30f96e2e9c282de6))
+* add `notHasAction` ([d96fd90](https://github.com/gretmn102/qsp-test-engine/commit/d96fd9073eb93c61b569e7829cec554f250f65f1)), closes [#10](https://github.com/gretmn102/qsp-test-engine/issues/10)
+* add `notHasObject` ([fe053d7](https://github.com/gretmn102/qsp-test-engine/commit/fe053d7ca780102a72bfc8ef9acb318615c3c30a)), closes [#8](https://github.com/gretmn102/qsp-test-engine/issues/8)
+* **selectObject:** write a list of all objects in case of an error ([b850ba5](https://github.com/gretmn102/qsp-test-engine/commit/b850ba585999e8df49e28e0859f3cc36af31a3a0)), closes [#5](https://github.com/gretmn102/qsp-test-engine/issues/5)
+* **select:** write a list of all actions in case of an error ([0022e42](https://github.com/gretmn102/qsp-test-engine/commit/0022e42332f75bb5eee2735563a1d9888ae58c1e)), closes [#4](https://github.com/gretmn102/qsp-test-engine/issues/4)
+
 ### [0.2.1](https://github.com/gretmn102/qsp-test-engine/compare/v0.2.0...v0.2.1) (2024-06-02)
 
 
