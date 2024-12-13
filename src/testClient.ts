@@ -153,6 +153,18 @@ export namespace TestClient {
     }
   }
 
+  export async function notHasAction(testClient: TestClient, action: string) {
+    const $actions = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getActions
+    )
+    const index = $actions.value.findIndex(obj => obj.name === action)
+    if (!(index < 0)) {
+      const actionNames = $actions.value.map(x => `* ${x.name}`).join("\n")
+      assert.fail(`Found "${action}" in:\n${actionNames}`)
+    }
+  }
+
   export async function selectObject(testClient: TestClient, object: string) {
     const objects = await getNewValue(
       testClient.lastSelectedTime,
