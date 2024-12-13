@@ -41,6 +41,24 @@ describe("Actions equals", () => {
   })
 })
 
+describe("Has action", () => {
+  it("not has exists action", async () => {
+    const testClient = await TestClient.start("tests/mocks", "actions.qsps")
+    await expect(() => TestClient.hasAction(testClient, "Not exists action"))
+      .rejects
+      .toThrowError([
+        "Not found \"Not exists action\" in:",
+        "* First action",
+        "* Second action",
+        "* Third action",
+      ].join("\n"))
+  })
+  it("has exists action", async () => {
+    const testClient = await TestClient.start("tests/mocks", "actions.qsps")
+    await TestClient.hasAction(testClient, "Second action")
+  })
+})
+
 test("IncLib", async () => {
   const testClient = await TestClient.start("tests/mocks", "game.qsps")
   await TestClient.select(testClient, "start")
