@@ -223,3 +223,21 @@ describe("Menu has", () => {
       ].join("\n"))
   })
 })
+
+describe("Menu not has", () => {
+  it("has", async () => {
+    const testClient = await TestClient.start("tests/mocks", "menu.qsps")
+    await expect(() => TestClient.notHasMenu(testClient, "New game"))
+      .rejects
+      .toThrowError([
+        "Found \"New game\" in:",
+        "* New game",
+        "* Load",
+      ].join("\n"))
+
+  })
+  it("not has", async () => {
+    const testClient = await TestClient.start("tests/mocks", "menu.qsps")
+    await TestClient.notHasMenu(testClient, "Non-existent action")
+  })
+})

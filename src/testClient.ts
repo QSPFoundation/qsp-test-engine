@@ -206,4 +206,16 @@ export namespace TestClient {
       assert.fail(`Not found "${menu}" in:\n${actionNames}`)
     }
   }
+
+  export async function notHasMenu(testClient: TestClient, menu: string) {
+    const $actions = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getMenu,
+    )
+    const index = $actions.value.actions.findIndex(obj => obj.name === menu)
+    if (!(index < 0)) {
+      const actionNames = $actions.value.actions.map(x => `* ${x.name}`).join("\n")
+      assert.fail(`Found "${menu}" in:\n${actionNames}`)
+    }
+  }
 }
