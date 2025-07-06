@@ -1,0 +1,13 @@
+# begin
+  $main_menu[] = 'New game:newGame'
+  $main_menu[] = 'Load:load'
+  menu 'main_menu'
+-
+
+# newGame
+  'New game'
+-
+
+# load
+  'Load'
+-

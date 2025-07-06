@@ -26,10 +26,28 @@ export namespace TimeUpdatedValue {
   }
 }
 
+export type MenuArgs = {
+  actions: QspListItem[],
+  select: (index: number) => void,
+}
+
+export namespace MenuArgs {
+  export function create(
+    actions?: QspListItem[],
+    select?: (index: number) => void
+  ): MenuArgs {
+    return {
+      actions: actions || [],
+      select: select || ((index: number) => {}),
+    }
+  }
+}
+
 export type GameClientState = {
   main: TimeUpdatedValue<string>
   actions: TimeUpdatedValue<QspListItem[]>
   objects: TimeUpdatedValue<QspListItem[]>
+  menus: TimeUpdatedValue<MenuArgs>
   error?: TimeUpdatedValue<QspErrorData>
 }
 
@@ -39,6 +57,7 @@ export namespace GameClientState {
       main: TimeUpdatedValue.create(dateTime, ""),
       actions: TimeUpdatedValue.create(dateTime, []),
       objects: TimeUpdatedValue.create(dateTime, []),
+      menus: TimeUpdatedValue.create(dateTime, MenuArgs.create()),
       error: undefined
     }
   }
@@ -51,6 +70,8 @@ export type GameClient = Atom<GameClientState> & Actions<{
   getActions: () => TimeUpdatedValue<QspListItem[]>,
   setObjects: (actions: QspListItem[]) => void,
   getObjects: () => TimeUpdatedValue<QspListItem[]>,
+  setMenu: (args: MenuArgs) => void,
+  getMenu: () => TimeUpdatedValue<MenuArgs>,
 }>
 
 export namespace GameClient {
@@ -79,6 +100,13 @@ export namespace GameClient {
         },
         getObjects: () : TimeUpdatedValue<QspListItem[]> =>
           atom.value.objects,
+        setMenu: (menus: MenuArgs) => {
+          atom.focus("menus").set(
+            TimeUpdatedValue.create(new Date, menus)
+          )
+        },
+        getMenu: () : TimeUpdatedValue<MenuArgs> =>
+          atom.value.menus,
       })
     )
   }
@@ -101,6 +129,12 @@ export namespace GameClient {
 
     api.on("actions_changed", actions => {
       $gameClient.actions.setActions(actions)
+    })
+
+    api.on("menu", (items, select) => {
+      $gameClient.actions.setMenu(
+        MenuArgs.create(items, select)
+      )
     })
 
     api.on("version", (type, onVersion) => {
