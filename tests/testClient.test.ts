@@ -206,3 +206,20 @@ describe("Menu select", () => {
       ].join("\n"))
   })
 })
+
+describe("Menu has", () => {
+  it("has", async () => {
+    const testClient = await TestClient.start("tests/mocks", "menu.qsps")
+    await TestClient.hasMenu(testClient, "New game")
+  })
+  it("not has", async () => {
+    const testClient = await TestClient.start("tests/mocks", "menu.qsps")
+    await expect(() => TestClient.hasMenu(testClient, "Non-existent action"))
+      .rejects
+      .toThrowError([
+        "Not found \"Non-existent action\" in:",
+        "* New game",
+        "* Load",
+      ].join("\n"))
+  })
+})
