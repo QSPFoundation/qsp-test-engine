@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/gretmn102/qsp-test-engine/compare/v0.2.2...v0.2.3) (2025-07-06)
+
+
+### Features
+
+* add menu testing ([#12](https://github.com/gretmn102/qsp-test-engine/issues/12)) ([1e147fc](https://github.com/gretmn102/qsp-test-engine/commit/1e147fce8a675ca8e43d349d3c723ebe9807e0c1))
+
 ### [0.2.2](https://github.com/gretmn102/qsp-test-engine/compare/v0.2.1...v0.2.2) (2024-12-13)
 
 
