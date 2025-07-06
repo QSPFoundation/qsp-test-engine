@@ -141,21 +141,6 @@ export namespace TestClient {
     testClient.server.api.execSelectedAction()
   }
 
-  export async function selectMenu(testClient: TestClient, menu: string) {
-    const $menus = await getNewValue(
-      testClient.lastSelectedTime,
-      testClient.client.actions.getMenu,
-    )
-    const selectedIndex = $menus.value.actions.findIndex(
-      currentMenu => currentMenu.name === menu
-    )
-    if (selectedIndex < 0) {
-      const menuStrings = $menus.value.actions.map(x => `* ${x.name}`).join("\n")
-      assert.fail(`Not found "${menu}" in:\n${menuStrings}`)
-    }
-    $menus.value.select(selectedIndex)
-  }
-
   export async function hasAction(testClient: TestClient, action: string) {
     const $actions = await getNewValue(
       testClient.lastSelectedTime,
@@ -193,5 +178,20 @@ export namespace TestClient {
       assert.fail(`Not found "${object}" in:\n${objectNames}`)
     }
     testClient.server.api.selectObject(res)
+  }
+
+  export async function selectMenu(testClient: TestClient, menu: string) {
+    const $menus = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getMenu,
+    )
+    const selectedIndex = $menus.value.actions.findIndex(
+      currentMenu => currentMenu.name === menu
+    )
+    if (selectedIndex < 0) {
+      const menuStrings = $menus.value.actions.map(x => `* ${x.name}`).join("\n")
+      assert.fail(`Not found "${menu}" in:\n${menuStrings}`)
+    }
+    $menus.value.select(selectedIndex)
   }
 }
