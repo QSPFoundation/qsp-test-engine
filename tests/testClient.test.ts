@@ -241,3 +241,29 @@ describe("Menu not has", () => {
     await TestClient.notHasMenu(testClient, "Non-existent action")
   })
 })
+
+describe("msg equal", () => {
+  it("equal", async () => {
+    const testClient = await TestClient.start("tests/mocks", "msg.qsps")
+    await TestClient.msgEqual(testClient, "Hello world")
+  })
+  it("not equal", async () => {
+    const testClient = await TestClient.start("tests/mocks", "msg.qsps")
+    await expect(() => TestClient.msgEqual(testClient, "anything else"))
+      .rejects
+      .toThrowError("expected 'Hello world' to be 'anything else'")
+  })
+})
+
+describe("msg close", () => {
+  it("success", async () => {
+    const testClient = await TestClient.start("tests/mocks", "msg.qsps")
+    await TestClient.msgClose(testClient)
+    await TestClient.mainEqual(testClient, "Text after message\r\n")
+  })
+  // it("msg not opened", async () => {
+  //   const testClient = await TestClient.start(
+  //     "tests/mocks", "msg.qsps", StartingLocation.mkCustom("without msg"))
+  //   await TestClient.msgClose(testClient) // Error: Test timed out in 5000ms.
+  // })
+})
