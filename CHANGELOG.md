@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.4](https://github.com/gretmn102/qsp-test-engine/compare/v0.2.3...v0.2.4) (2025-07-07)
+
+
+### Features
+
+* add `msgEqual` and `msgClose` ([#13](https://github.com/gretmn102/qsp-test-engine/issues/13)) ([3f68192](https://github.com/gretmn102/qsp-test-engine/commit/3f68192fc131cb95b6a2708776c4e8bf97809d17))
+
+
+### Bug Fixes
+
+* **test:** some failed test in Linux ([#14](https://github.com/gretmn102/qsp-test-engine/issues/14)) ([1b50725](https://github.com/gretmn102/qsp-test-engine/commit/1b50725d21951cdddcfa1f7d4d3680d77432ec17))
+
 ### [0.2.3](https://github.com/gretmn102/qsp-test-engine/compare/v0.2.2...v0.2.3) (2025-07-06)
 
 
