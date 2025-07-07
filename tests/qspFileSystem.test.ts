@@ -1,5 +1,6 @@
 import { Result } from "@fering-org/functional-helper"
 import { expect, test } from "vitest"
+import { EOL } from "node:os"
 
 import { QspFileSystem } from "../src"
 
@@ -32,5 +33,5 @@ test("load qsp file", async () => {
     "  'Hello world'",
     "-",
     "",
-  ].join("\r\n"))
+  ].join(EOL))
 })
