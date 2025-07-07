@@ -170,7 +170,7 @@ describe("starting location", () => {
     const testClient = await TestClient.start("tests/mocks", "startingLocation.qsps", StartingLocation.mkDefault())
     await TestClient.mainEqual(testClient, "this is c location\r\n")
   })
-  if (platform() === "win32") { // todo: fix: "Test timed out in 5000ms" in linux
+  if (platform() === "win32") { // fix: "Test timed out in 5000ms" in none starting location on Linux
     it("none", async () => {
       const testClient = await TestClient.start("tests/mocks", "startingLocation.qsps", StartingLocation.mkNone())
       testClient.server.api.execCode("'none'")
