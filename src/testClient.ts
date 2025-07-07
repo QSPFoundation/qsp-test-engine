@@ -218,4 +218,23 @@ export namespace TestClient {
       assert.fail(`Found "${menu}" in:\n${actionNames}`)
     }
   }
+
+  export async function msgEqual(
+    testClient: TestClient,
+    expectedString: string
+  ) {
+    const $msgState = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getMsg,
+    )
+    expect($msgState.value.text).toBe(expectedString)
+  }
+
+  export async function msgClose(testClient: TestClient) {
+    const $msgState = await getNewValue(
+      testClient.lastSelectedTime,
+      testClient.client.actions.getMsg,
+    )
+    $msgState.value.close()
+  }
 }

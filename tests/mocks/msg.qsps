@@ -1,0 +1,8 @@
+# begin
+  msg 'Hello world'
+  'Text after message'
+-
+
+# without msg
+  'without msg'
+-

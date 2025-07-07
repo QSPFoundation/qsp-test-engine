@@ -43,11 +43,29 @@ export namespace MenuArgs {
   }
 }
 
+export type MsgArgs = {
+  text: string
+  close: () => void
+}
+
+export namespace MsgArgs {
+  export function create(
+    text?: string,
+    close?: () => void
+  ): MsgArgs {
+    return {
+      text: text || "",
+      close: close || (() => {}),
+    }
+  }
+}
+
 export type GameClientState = {
   main: TimeUpdatedValue<string>
   actions: TimeUpdatedValue<QspListItem[]>
   objects: TimeUpdatedValue<QspListItem[]>
   menus: TimeUpdatedValue<MenuArgs>
+  msg: TimeUpdatedValue<MsgArgs>
   error?: TimeUpdatedValue<QspErrorData>
 }
 
@@ -58,6 +76,7 @@ export namespace GameClientState {
       actions: TimeUpdatedValue.create(dateTime, []),
       objects: TimeUpdatedValue.create(dateTime, []),
       menus: TimeUpdatedValue.create(dateTime, MenuArgs.create()),
+      msg: TimeUpdatedValue.create(dateTime, MsgArgs.create()),
       error: undefined
     }
   }
@@ -72,6 +91,8 @@ export type GameClient = Atom<GameClientState> & Actions<{
   getObjects: () => TimeUpdatedValue<QspListItem[]>,
   setMenu: (args: MenuArgs) => void,
   getMenu: () => TimeUpdatedValue<MenuArgs>,
+  setMsg: (args: MsgArgs) => void,
+  getMsg: () => TimeUpdatedValue<MsgArgs>,
 }>
 
 export namespace GameClient {
@@ -107,6 +128,13 @@ export namespace GameClient {
         },
         getMenu: () : TimeUpdatedValue<MenuArgs> =>
           atom.value.menus,
+        setMsg: (msg: MsgArgs) => {
+          atom.focus("msg").set(
+            TimeUpdatedValue.create(new Date, msg)
+          )
+        },
+        getMsg: () : TimeUpdatedValue<MsgArgs> =>
+          atom.value.msg,
       })
     )
   }
@@ -134,6 +162,12 @@ export namespace GameClient {
     api.on("menu", (items, select) => {
       $gameClient.actions.setMenu(
         MenuArgs.create(items, select)
+      )
+    })
+
+    api.on("msg", (text, close) => {
+      $gameClient.actions.setMsg(
+        MsgArgs.create(text, close)
       )
     })
 
